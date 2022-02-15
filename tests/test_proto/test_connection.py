@@ -3,8 +3,21 @@ import re
 import pytest
 
 from asynch.proto.connection import Connection
+from conftest import (
+    CONNECTION_DB,
+    CONNECTION_HOST,
+    CONNECTION_PASSWORD,
+    CONNECTION_PORT,
+    CONNECTION_USER,
+)
 
-conn = Connection()
+conn = Connection(
+    host=CONNECTION_HOST,
+    port=CONNECTION_PORT,
+    user=CONNECTION_USER,
+    password=CONNECTION_PASSWORD,
+    database=CONNECTION_DB,
+)
 
 
 @pytest.mark.asyncio
