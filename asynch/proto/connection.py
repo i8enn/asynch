@@ -259,6 +259,14 @@ class Connection:
                 exc_info=e,
             )
             return False
+        except (ConnectionError, OSError, RuntimeError) as e:
+            # If raised RuntimeError with "TCPTransport the handler is closed" - just returning false,
+            # because this is a connection loss case
+            if isinstance(e, RuntimeError) and "TCPTransport closed=True" in str(e):
+                logger.debug("Socket closed", exc_info=e)
+                return False
+            raise
+
         return True
 
     async def receive_data(self):
